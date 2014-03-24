@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="20" height="10" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="mountainscape" tilewidth="32" tileheight="32">
+  <image source="gfx/mountain_landscape.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="257" name="platformer" tilewidth="32" tileheight="32">
+  <image source="gfx/generic_platformer_tiles.png" width="1024" height="768"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="20" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC42QzQ3CMAyF41wKhT0oP3tQylpwhyXgDiwARXBvWYAfwRq8qIlkHIM4fErsZ7/YSawxLdAGiSDkUzAjY+YU53/FPY+scazgtaZGz0AfDGwc71FzACU4Ku+nvu4E7cx0WdeB1gVXcAN38FD8nFcBntBeTJdzDaGNlH5tX/knwWcBliCHzwQUyn+Mlbc1j9C/sQ1bsPP9udP9XhnFOc0j9FeeGlycH33OOyU9Jz1qNhfX+F2e3+rCvbLxvnxWeVZ/3nn8BlHhbD8gAwAA
+  </data>
+ </layer>
+</map>
