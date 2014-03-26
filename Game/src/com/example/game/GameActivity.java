@@ -19,6 +19,10 @@ import org.andengine.extension.tmx.util.exception.TMXLoadException;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
+import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
+import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.ui.activity.BaseGameActivity;
@@ -33,7 +37,7 @@ public class GameActivity extends BaseGameActivity {
 	private BoundCamera mBoundCamera;
 	private TMXTiledMap tiledMap;
 	
-	private BitmapTextureAtlas mBitMapTextureAtlas;
+	private BuildableBitmapTextureAtlas mBitmapTextureAtlas;
 	private TiledTextureRegion playerTopHalfTextureRegion;
 	private TiledTextureRegion mHelicopterTextureRegion;
 	
@@ -95,7 +99,7 @@ public class GameActivity extends BaseGameActivity {
 		scene.attachChild(helicopter);
 		
 		/* Create the sprite and add it to the scene. */
-		final AnimatedSprite player = new AnimatedSprite(32*5, 32*2, 27, 28, this.playerTopHalfTextureRegion, this.getVertexBufferObjectManager());
+		final AnimatedSprite player = new AnimatedSprite(32*5, 32*2, this.playerTopHalfTextureRegion, this.getVertexBufferObjectManager());
 		this.mBoundCamera.setChaseEntity(player);
 		player.animate(100);
 		this.scene.attachChild(player);
@@ -106,12 +110,17 @@ public class GameActivity extends BaseGameActivity {
 	private void loadGfx() {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 		//Last two params (width and height of texture) must be to the power of 2
-		mBitMapTextureAtlas = new BitmapTextureAtlas(getTextureManager(), 32*20, 32*10, TextureOptions.DEFAULT);
+		mBitmapTextureAtlas = new BuildableBitmapTextureAtlas(getTextureManager(), 32*20, 32*10, TextureOptions.NEAREST);
 		//Last two parameters are where the image is set to initially
-		playerTopHalfTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(mBitMapTextureAtlas, this, "topwalking.png", 0, 0, 6, 1);
+		playerTopHalfTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(mBitmapTextureAtlas, this, "topwalking.png", 4, 1);
 		
-		mHelicopterTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(this.mBitMapTextureAtlas, this, "helicopter_tiled.png", 0, 0, 2, 2);
-		mBitMapTextureAtlas.load();
+		mHelicopterTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(this.mBitmapTextureAtlas, this, "helicopter_tiled.png", 2, 2);
+		try {
+			this.mBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 1));
+			this.mBitmapTextureAtlas.load();
+		} catch (TextureAtlasBuilderException e) {
+			Debug.e(e);
+		}
 		
 	}
 	
