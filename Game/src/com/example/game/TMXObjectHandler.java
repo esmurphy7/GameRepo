@@ -13,7 +13,7 @@ public class TMXObjectHandler {
 
 	/*Simple value to check if the incoming entity is a wall type and should trigger collisions
 	 * Could add various other checks such as items, enemies, projectiles etc.
-	 * Type set to Object so that the check could compare values other than simply a string
+	 * Data type is Object so that the check could compare values other than simply a string
 	 */
 	private static final Object TYPE_WALL = "wall";
 
